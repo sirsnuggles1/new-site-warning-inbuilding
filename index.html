@@ -16,6 +16,8 @@
             --text-color: #343a40;
             --border-color: #dee2e6;
             --header-height: 60px;
+            --content-width: 650px; /* Belangrijk: Maak de contentkolom smaller voor het effect */
+
             --status-new: #007bff;
             --status-completed: #28a745;
             --status-in-progress: #fd7e14;
@@ -34,7 +36,7 @@
             line-height: 1.6;
         }
 
-        /* Header (Hetzelfde als origineel) */
+        /* Header blijft bovenaan vast */
         .header {
             display: flex;
             justify-content: space-between;
@@ -49,181 +51,83 @@
             z-index: 50;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--text-color);
-        }
+        /* Navigatie en Knoppen (ongewijzigd) */
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .logo-beta { font-size: 0.7rem; }
+        .nav { display: flex; gap: 20px; }
+        .nav-link { text-decoration: none; color: var(--secondary-color); padding: 10px 0; }
+        .nav-link:hover, .nav-link-active { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
+        .user-actions { display: flex; align-items: center; gap: 15px; }
+        .btn { padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; background-color: var(--primary-color); color: white; }
 
-        .logo-beta {
-            font-size: 0.7rem;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 2px 5px;
-            border-radius: 4px;
-            margin-left: 5px;
-            font-weight: normal;
-        }
-
-        .nav {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--secondary-color);
-            padding: 10px 0;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover, .nav-link-active {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .nav-link i {
-            margin-right: 5px;
-        }
-
-        .user-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s;
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        /* Container voor de brede lay-out ZONDER zijbalk */
+        /* Container voor Smalle Content en Zijbalk */
         .container {
-            display: block; /* Verwijder flex lay-out */
+            display: flex; /* Gebruik flex om de zijbalk en content naast elkaar te plaatsen */
             padding-top: 20px;
-            max-width: 900px; /* Een meer gecentreerde, brede content kolom */
+            max-width: 1200px; /* Geef de hele lay-out een maximale breedte */
             margin: 0 auto;
+            gap: 40px; /* Grotere ruimte tussen zijbalk en content */
             padding-left: 20px;
             padding-right: 20px;
         }
-
-        .main-content {
-            flex-grow: 1;
-            /* Nu de enige kolom, neemt de hele breedte van de container in beslag */
+        
+        /* Zijbalk voor het profiel en knop */
+        .sidebar {
+            flex: 0 0 250px; /* Vaste breedte voor de zijbalk */
+            height: fit-content;
+            padding-top: 10px; 
         }
-
-        .content-header {
-            margin-bottom: 20px;
-            padding: 0 0px; /* Geen padding nodig als de container al padding heeft */
-        }
-
-        .content-header h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        /* Post Kaarten (Gebruikt voor Secties) */
-        .post-card {
-            display: flex;
+        
+        .profile-card {
             background-color: var(--card-background);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            transition: box-shadow 0.3s, border-color 0.3s;
-        }
-
-        /* Voeg de hover-stijl toe voor het "klikbare" effect */
-        .post-card:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.1);
-            cursor: pointer; 
-        }
-
-        .post-votes {
-            /* Gebruikt voor de stem/like-telling, maar nu aangepast als informatieve indicator */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-right: 20px;
-            flex-shrink: 0;
-            
-            /* Stijl de stem-sectie als een vaste indicator, net zoals in het origineel*/
-            border: 1px solid var(--border-color);
-            padding: 10px 0;
-            border-radius: 4px;
-            height: fit-content;
-            width: 50px;
-            color: var(--secondary-color);
-            font-weight: bold;
-            font-size: 0.9rem;
+            padding: 20px;
             text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--background-color);
+            margin: 0 auto 10px;
+            line-height: 80px;
+            font-size: 30px;
+            color: var(--primary-color);
+            border: 2px solid var(--border-color);
+        }
+
+        .sidebar-section h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+        }
+
+        /* Contentgebied */
+        .main-content {
+            flex-grow: 1; 
+            max-width: var(--content-width); /* Beperk de contentbreedte om het "smalle" effect te krijgen */
         }
         
-        /* Simuleer de upvote pijl */
-        .post-votes i {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            margin-bottom: 3px;
-        }
-
-
-        .post-details {
-            flex-grow: 1;
-        }
-
-        .post-status {
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 4px;
-            color: white;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-
+        /* Post Kaarten (Ongewijzigd, maar nu smal) */
+        .content-header h2 { font-size: 1.8rem; font-weight: 600; }
+        .post-card { display: flex; background-color: var(--card-background); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); transition: box-shadow 0.3s, border-color 0.3s; }
+        .post-card:hover { border-color: var(--primary-color); box-shadow: 0 4px 8px rgba(0, 123, 255, 0.1); cursor: pointer; }
+        .post-votes { display: flex; flex-direction: column; align-items: center; margin-right: 20px; flex-shrink: 0; border: 1px solid var(--border-color); padding: 10px 0; border-radius: 4px; height: fit-content; width: 50px; color: var(--secondary-color); font-weight: bold; font-size: 0.9rem; text-align: center; }
+        .post-votes i { font-size: 1.2rem; color: var(--primary-color); margin-bottom: 3px; }
+        .post-details { flex-grow: 1; }
+        .post-status { font-size: 0.75rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; color: white; text-transform: uppercase; margin-bottom: 10px; display: inline-block; }
         .post-status.new { background-color: var(--status-new); }
         .post-status.completed { background-color: var(--status-completed); }
         .post-status.in-progress { background-color: var(--status-in-progress); }
-
-        .post-details h3 {
-            font-size: 1.1rem;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            color: var(--text-color);
-        }
-        
-        .post-details h3:first-of-type {
-            margin-top: 0;
-        }
-
-        .post-excerpt {
-            font-size: 0.95rem;
-            color: var(--secondary-color);
-            margin-bottom: 10px;
-        }
-
-        .post-meta {
-            font-size: 0.8rem;
-            color: var(--secondary-color);
-            display: flex;
-            gap: 15px;
-            margin-top: 5px;
-        }
-
-        .post-meta i {
-            margin-right: 4px;
-        }
+        .post-details h3 { font-size: 1.1rem; margin-top: 15px; margin-bottom: 5px; color: var(--text-color); }
+        .post-details h3:first-of-type { margin-top: 0; }
+        .post-excerpt { font-size: 0.95rem; color: var(--secondary-color); margin-bottom: 10px; }
+        .post-meta { font-size: 0.8rem; color: var(--secondary-color); display: flex; gap: 15px; margin-top: 5px; }
         /* CSS BLOK EIND */
     </style>
 </head>
@@ -244,9 +148,28 @@
     </header>
 
     <div class="container">
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="profile-pic"><i class="fas fa-user"></i></div>
+                <strong>[Jouw Naam]</strong>
+                <p style="font-size: 0.9rem; color: var(--secondary-color);">Software Developer</p>
+            </div>
+            
+            <button class="btn btn-primary" style="width: 100%;"><i class="fas fa-comment"></i> Laat een Bericht Achter</button>
+            
+            <div class="sidebar-section" style="margin-top: 30px;">
+                <h3>Secties Navigatie</h3>
+                <ul>
+                    <li><a href="#cv" style="text-decoration: none; color: var(--text-color);"><i class="fas fa-file-alt"></i> Curriculum Vitae</a></li>
+                    <li><a href="#portfolio" style="text-decoration: none; color: var(--text-color);"><i class="fas fa-laptop-code"></i> Projecten</a></li>
+                    <li><a href="#hobbies" style="text-decoration: none; color: var(--text-color);"><i class="fas fa-paint-brush"></i> Vrije Tijd</a></li>
+                </ul>
+            </div>
+        </aside>
+        
         <main class="main-content">
             <div class="content-header">
-                <h2>Mijn Persoonlijke Secties</h2>
+                <h2>Welkom op mijn Persoonlijke Pagina</h2>
             </div>
 
             <section id="cv" class="content-section">
@@ -330,8 +253,7 @@
     </div>
     
     <script>
-        // JAVASCRIPT BLOK START
-        // 1. Smooth Scrolling
+        // JAVASCRIPT BLOK START (Smooth Scrolling en Active Highlighting)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 if (this.getAttribute('href').length > 1) {
@@ -350,7 +272,6 @@
             });
         });
 
-        // 2. Active Link Highlighting
         window.addEventListener('scroll', () => {
             const scrollPosition = window.scrollY + 80;
 

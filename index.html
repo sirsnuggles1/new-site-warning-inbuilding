@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage - [Jouw Naam]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* CSS BLOK START */
+        /* Globale Stijlen */
+        :root {
+            --primary-color: #007bff; /* Een heldere blauwe kleur voor knoppen/links */
+            --secondary-color: #6c757d;
+            --background-color: #f8f9fa; /* Lichtgrijze achtergrond */
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --border-color: #dee2e6;
+            --header-height: 60px;
+
+            /* Status kleuren (gebruikt voor sectie tags) */
+            --status-new: #007bff; /* Blauw */
+            --status-planned: #ffc107; /* Geel */
+            --status-in-progress: #fd7e14; /* Oranje */
+            --status-completed: #28a745; /* Groen */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: var(--header-height);
+            background-color: var(--card-background);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: sticky; /* Zorg dat de header blijft staan */
+            top: 0;
+            z-index: 50;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .logo-beta {
+            font-size: 0.7rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin-left: 5px;
+            font-weight: normal;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--secondary-color);
+            padding: 10px 0;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link-active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .nav-link i {
+            margin-right: 5px;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Knoppen */
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Hoofdindeling */
+        .container {
+            display: flex;
+            padding-top: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        .sidebar {
+            flex: 0 0 250px;
+            background-color: var(--card-background);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+
+        .sidebar-section {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-section h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+        }
+
+        .sidebar-section ul {
+            list-style: none;
+        }
+
+        .sidebar-section li a {
+            display: block;
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 5px 0;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .sidebar-section li a:hover {
+            color: var(--primary-color);
+        }
+
+        .sidebar-section p {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+        }
+
+        .content-header {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .content-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        /* Post Kaarten (Gebruikt voor Secties) */
+        .post-card {
+            display: flex;
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .post-votes {
+            /* Dit element is nu alleen een lege ruimtehouder */
+            flex-shrink: 0;
+            width: 50px; 
+        }
+
+        .post-details {
+            flex-grow: 1;
+        }
+
+        .post-status {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: white;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Kleuren voor de sectie-tags */
+        .post-status.new { background-color: var(--status-new); }
+        .post-status.completed { background-color: var(--status-completed); }
+        .post-status.in-progress { background-color: var(--status-in-progress); }
+
+        .post-details h3 {
+            font-size: 1.1rem;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .post-details h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .post-excerpt {
+            font-size: 0.95rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .post-meta {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .post-meta i {
+            margin-right: 4px;
+        }
+        /* CSS BLOK EIND */
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <span class="logo-text">Jouw Naam</span>
+            <span class="logo-beta">HOME</span>
+        </div>
+        <nav class="nav">
+            <a href="#cv" class="nav-link nav-link-active"><i class="fas fa-user-tie"></i> CV</a>
+            <a href="#portfolio" class="nav-link"><i class="fas fa-folder-open"></i> Portfolio</a>
+            <a href="#hobbies" class="nav-link"><i class="fas fa-palette"></i> Hobbies</a>
+        </nav>
+        <div class="user-actions">
+            <button class="btn btn-primary">Contact</button>
+            <i class="fas fa-bell notification-icon" style="display: none;"></i>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Secties</h3>
+                <ul>
+                    <li><a href="#cv"><i class="fas fa-file-alt"></i> Curriculum Vitae</a></li>
+                    <li><a href="#portfolio"><i class="fas fa-laptop-code"></i> Projecten</a></li>
+                    <li><a href="#hobbies"><i class="fas fa-paint-brush"></i> Vrije Tijd</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Contact</h3>
+                <p>Mail: jouw.mail@example.com</p>
+                <p>Telefoon: +31 6 12345678</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h2>Welkom op mijn Persoonlijke Pagina</h2>
+            </div>
+
+            <section id="cv" class="content-section">
+                <article class="post-card">
+                    <div class="post-votes" style="visibility: hidden;"></div>
+                    <div class="post-details">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Curriculum Vitae</h2>
+                        <span class="post-status completed">Ervaring</span>
+                        
+                        <h3>Werkervaring (2018 - Heden)</h3>
+                        <p class="post-excerpt">
+                            **Software Developer** bij Tech Solutions B.V. <br>
+                            Verantwoordelijk voor de ontwikkeling van de backend-API en het onderhouden van de database.
+                        </p>
+
+                        <h3>Opleiding (2014 - 2018)</h3>
+                        <p class="post-excerpt">
+                            **Hogeschool van Amsterdam** - HBO Informatica <br>
+                            Afgestudeerd met specialisatie in web development.
+                        </p>
+                    </div>
+                </article>
+            </section>
+
+            <section id="portfolio" class="content-section">
+                <article class="post-card">
+                    <div class="post-votes" style="visibility: hidden;"></div>
+                    <div class="post-details">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Portfolio Projecten</h2>
+                        <span class="post-status new">Projecten</span>
+
+                        <h3>Project A: E-commerce Platform</h3>
+                        <p class="post-excerpt">
+                            Volledig responsive platform gebouwd met React en Node.js. Inclusief veilige betalingsintegratie.
+                        </p>
+                        <div class="post-meta">
+                            <span><i class="fas fa-tag"></i> React, Node.js, Stripe</span>
+                        </div>
+                        
+                        <h3 style="margin-top: 15px;">Project B: IoT Dashboard</h3>
+                        <p class="post-excerpt">
+                            Realtime data visualisatie dashboard voor sensor netwerken. Gebruikt Python en D3.js.
+                        </p>
+                         <div class="post-meta">
+                            <span><i class="fas fa-tag"></i> Python, D3.js, MQTT</span>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <section id="hobbies" class="content-section">
+                <article class="post-card">
+                    <div class="post-votes" style="visibility: hidden;"></div>
+                    <div class="post-details">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Mijn Hobbies</h2>
+                        <span class="post-status in-progress">Vrije Tijd</span>
+
+                        <h3><i class="fas fa-camera"></i> Fotografie</h3>
+                        <p class="post-excerpt">
+                            Gepassioneerd door straatfotografie en landschappen. Ik gebruik een Canon EOS R6.
+                        </p>
+
+                        <h3><i class="fas fa-dumbbell"></i> Fitness</h3>
+                        <p class="post-excerpt">
+                            Regelmatig in de sportschool om fit te blijven en nieuwe persoonlijke records te vestigen.
+                        </p>
+                    </div>
+                </article>
+            </section>
+            
+        </main>
+    </div>
+    
+    <script>
+        // JAVASCRIPT BLOK START
+        // 1. Smooth Scrolling: Zorgt voor een vloeiende overgang bij het klikken op links naar secties (#cv, #portfolio).
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href').length > 1) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        // Scroll naar het element met een vloeiende animatie
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70, // -70 voor de vaste header
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // 2. Active Link Highlighting: Zorgt ervoor dat de navigatielink in de header de 'active' stijl krijgt wanneer de gebruiker naar de sectie scrollt.
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY + 80; // +80 om de vaste header te compenseren
+
+            document.querySelectorAll('section[id]').forEach(section => {
+                // Controleer of de huidige scrollpositie binnen deze sectie valt
+                if (section.offsetTop <= scrollPosition && section.offsetTop + section.offsetHeight > scrollPosition) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('nav-link-active');
+                        // Als de href van de link overeenkomt met de ID van de sectie
+                        if (link.getAttribute('href') === '#' + section.id) {
+                            link.classList.add('nav-link-active');
+                        }
+                    });
+                }
+            });
+        });
+        // JAVASCRIPT BLOK EIND
+    </script>
+</body>
+</html>
